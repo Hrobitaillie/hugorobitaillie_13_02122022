@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Link,useNavigate } from "react-router-dom";
 import { logout, reset } from "../features/auth/authSlice";
+import { resetUserInfos } from "../features/userDatas/userDatasSlice";
 
 export default function Header(){
 
@@ -13,6 +14,7 @@ export default function Header(){
     const onLogout = () =>{
         dispatch(logout())
         dispatch(reset())
+        dispatch(resetUserInfos())
         navigate('/')
     }
 

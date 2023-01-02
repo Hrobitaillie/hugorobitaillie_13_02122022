@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import authService from './authService';
+import authService, { checkingTokenValidity } from './authService';
 
 
 // Get user from localStorage
@@ -10,7 +10,8 @@ const initialState = {
     isError: false,
     isSuccess: false,
     isLoading: false,
-    message: ''
+    message: '',
+    isValidToken: false,
 }
 
 export const login = createAsyncThunk('auth/login', async(user, thunkAPI) => {
@@ -41,6 +42,9 @@ export const authSlice = createSlice({
             state.isError = false
             state.isSuccess = false
             state.message = ''
+        },
+        checkTokenValidity: (state) => {
+            state.isValidToken = checkingTokenValidity();
         }
     },
     extraReducers: (builder) => {
@@ -65,5 +69,5 @@ export const authSlice = createSlice({
     },
 })
 
-export const { reset } = authSlice.actions
+export const { reset, checkTokenValidity } = authSlice.actions
 export default authSlice.reducer

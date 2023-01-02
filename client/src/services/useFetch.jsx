@@ -1,26 +1,20 @@
 import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
-import { setnames } from "../features/userDatas/userDatasSlice";
 
 const API_URL = process.env.REACT_APP_API_URL
 const errorDetected = (error) =>{
     console.log("An error as expected", error);
 }
 
-const loginConfig = {
-    headers: {  Authorization: `Bearer ${localStorage.token}`,
-                'Content-Type' : 'application/json',
-                'Accept' : 'application/json' }
-};
 
 export const fetchUserBankAccounts = async () => {
     try{
-        const response = await axios.post( 
+        return await axios.post( 
             API_URL + "profile",
             {},
-            loginConfig
+            {
+                headers: {Authorization: `Bearer ${localStorage.token}`}
+            }
         );
-        return response
     } catch(error){
         errorDetected(error)
     }

@@ -7,6 +7,7 @@ import './index.css';
 import { Provider } from 'react-redux';
 import { store } from './store/store'
 import { QueryClient, QueryClientProvider } from 'react-query';
+import './fontawesome.js';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const queryClient = new QueryClient({

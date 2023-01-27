@@ -12,7 +12,6 @@ import { fetchUserBankAccounts } from "../services/useFetch";
 export default function Profile(){
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const [isEditNamePopupActive, setIsEditNamePopupActive] = useState(false)
 
   useEffect(() => {
     const token = localStorage.token
@@ -33,10 +32,6 @@ export default function Profile(){
       dispatch(setnames(names))
     }
   },[data])
-
-  function toggleEditNamePopup(){
-    setIsEditNamePopupActive(!isEditNamePopupActive)
-  }
   
   if (isLoading) {
     return(
@@ -47,7 +42,6 @@ export default function Profile(){
       <p>There is an error</p>
     )
   }else if (data) {
-    console.log(isEditNamePopupActive);
     return(
       <>
         <main className="main bg-dark">

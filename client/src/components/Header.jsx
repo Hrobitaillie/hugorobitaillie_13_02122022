@@ -1,14 +1,31 @@
+import { useEffect } from "react";
+import { useQuery } from "react-query";
 import { useDispatch, useSelector } from "react-redux";
 import { Link,useNavigate } from "react-router-dom";
 import { logout, reset } from "../features/auth/authSlice";
-import { resetUserInfos } from "../features/userDatas/userDatasSlice";
+import { resetUserInfos, setnames } from "../features/userDatas/userDatasSlice";
+import { fetchUserBankAccounts } from "../services/useFetch";
 
 export default function Header(){
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
-    const { user } = useSelector((state)=> state.auth)
+    const { data, isError, isLoading} = useQuery('user', () => fetchUserBankAccounts()) 
+    const user = useSelector((state) => state.userDatas)
+  
+    useEffect(()=>{
+      if (data) {
+        const names = {
+          lastName: data.data.body.lastName,
+          firstName: data.data.body.firstName,
+        }
+        dispatch(setnames(names))
+      }
+    },[data])
+
+    const firstName = user.firstName
+
     const token = localStorage.token
 
     const onLogout = () =>{
@@ -33,7 +50,7 @@ export default function Header(){
                     <>
                         <Link to='/profile' className="main-nav-item">
                             <i className="fa fa-user-circle"></i>
-                            Profile
+                            {firstName === "<placeholder>" ?("Profile") : firstName}
                         </Link>
                         <Link to='' onClick={onLogout} className="main-nav-item">
                             <i className="fa fa-user-circle"></i>

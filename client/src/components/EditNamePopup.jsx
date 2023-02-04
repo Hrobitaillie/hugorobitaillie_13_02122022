@@ -34,7 +34,7 @@ export default function EditNamePopup(){
         if (data.status == 200) {
             dispatch(setnames(userData))
             toggleEditNamePopup()
-        }else if (data.status == 401) {
+        }else{
             switch (data.status) {
                 case 400:
                     alert("An error has expected\n Invalid Fields")
